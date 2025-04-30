@@ -1,0 +1,45 @@
+#ifndef WAKEUP_H
+#define WAKEUP_H
+
+#include <QObject>
+#include "stdlib.h"
+#include "stdio.h"
+#include <windows.h>
+#include <conio.h>
+#include <errno.h>
+#include <WinDef.h>
+
+
+#include "E:/code/Qtcode/Audio-test-master/Audio/wakeup_SDK/include/qivw.h"   //语音唤醒
+#include "E:/code/Qtcode/Audio-test-master/Audio/wakeup_SDK/include/msp_cmn.h"
+#include "E:/code/Qtcode/Audio-test-master/Audio/wakeup_SDK/include/msp_errors.h"
+
+#pragma comment(lib, "winmm.lib")
+
+#ifdef _WIN64
+#pragma comment(lib,"../../libs/msc_x64.lib")
+#else
+#pragma comment(lib, "../../libs/msc.lib")
+#endif
+
+
+
+class wakeup : public QObject
+{
+    Q_OBJECT
+public:
+    explicit wakeup(QObject *parent = nullptr);
+    
+    
+    void sleep_ms(int ms);
+    
+    
+    //
+    int cb_ivw_msg_proc( const char *sessionID, int msg, int param1, int param2, const void *info, void *userData );
+    
+
+signals:
+    void wakeup_finished();
+};
+
+#endif // WAKEUP_H
